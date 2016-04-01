@@ -1,5 +1,5 @@
-#ifndef __AIRPORT_H__
-#define __AIRPORT_H__
+#ifndef AIRPORT_H_
+#define AIRPORT_H_
 
 #include <ross.h>
 
