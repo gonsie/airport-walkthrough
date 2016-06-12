@@ -27,6 +27,39 @@ void airplane_event(airplane_state *s, tw_bf *bf, message *in_msg, tw_lp *lp) {
         tw_error(TW_LOC, "Airplane unrecognized message type\n");
     }
 
+    if (s->status == GROUND) {
+        // free runway after takeoff
+        tw_event *e = tw_event_new(s->current_airport, RUNWAY_TIME, lp);
+        message *msg = tw_event_data(e);
+        msg->type = RUNWAY_FREE;
+        tw_event_send(e);
+
+        // update airplane status
+        s->status = FLIGHT;
+
+        // request runway for landing at destination
+        tw_event *e2 = tw_event_new(s->destination_airport, FLIGHT_TIME, lp);
+        message *msg2 = tw_event_data(e2);
+        msg2->type = RUNWAY_REQUEST;
+        tw_event_send(e2);
+    } else if (s->status == FLIGHT) {
+        // free runway after landing
+        tw_event *e = tw_event_new(s->destination_airport, RUNWAY_TIME, lp);
+        message *msg = tw_event_data(e);
+        msg->type = RUNWAY_FREE;
+        tw_event_send(e);
+
+        // update airplane status
+        s->status = GROUND;
+        s->current_airport = s->destination_airport;
+        s->destination_airport = tw_rand_integer(lp->rng, 0, g_total_airports);
+
+        // request runway for takeoff
+        tw_event *e2 = tw_event_new(s->current_airport, GROUND_TIME, lp);
+        message *msg2 = tw_event_data(e2);
+        msg2->type = RUNWAY_REQUEST;
+        tw_event_send(e2);
+    }
 }
 
 void airplane_reverse(airplane_state *s, tw_bf *bf, message *in_msg, tw_lp *lp) {
