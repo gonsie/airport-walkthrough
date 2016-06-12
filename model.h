@@ -5,7 +5,6 @@
 
 typedef enum {
 	FLIGHT,
-	RUNWAY,
 	GROUND,
 } airplane_status;
 
