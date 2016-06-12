@@ -31,4 +31,10 @@ typedef struct {
 	message_type type;
 } message;
 
+// GLOBAL VARIABLES
+// defined in airport.c
+extern int g_total_airports;
+// defined in airplane.c
+extern int g_total_airplanes;
+
 #endif
