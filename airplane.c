@@ -14,6 +14,12 @@ void airplane_init(airplane_state *s, tw_lp *lp) {
 }
 
 void airplane_pre_run(airplane_state *s, tw_lp *lp) {
+    // Request runway for takeoff from current airport
+    double jitter = (tw_rand_unif(lp->rng)) * GROUND_TIME;
+    tw_event *init_event = tw_event_new(s->current_airport, jitter, lp);
+    message *msg = tw_event_data(init_event);
+    msg->type = RUNWAY_REQUEST;
+    tw_event_send(init_event);
 }
 
 void airplane_event(airplane_state *s, tw_bf *bf, message *in_msg, tw_lp *lp) {
