@@ -23,6 +23,9 @@ void airplane_pre_run(airplane_state *s, tw_lp *lp) {
 }
 
 void airplane_event(airplane_state *s, tw_bf *bf, message *in_msg, tw_lp *lp) {
+    if (in_msg->type != RUNWAY_GRANT) {
+        tw_error(TW_LOC, "Airplane unrecognized message type\n");
+    }
 
 }
 
