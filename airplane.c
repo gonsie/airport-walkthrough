@@ -1,5 +1,9 @@
 #include "model.h"
 
+#define RUNWAY_TIME 1
+#define FLIGHT_TIME 10
+#define GROUND_TIME 5
+
 // default value
 int g_total_airplanes = 1;
 
