@@ -63,7 +63,7 @@ void airplane_event(airplane_state *s, tw_bf *bf, message *in_msg, tw_lp *lp) {
 }
 
 void airplane_reverse(airplane_state *s, tw_bf *bf, message *in_msg, tw_lp *lp) {
-
+    return;
 }
 
 void airplane_final(airplane_state *s, tw_lp *lp) {
